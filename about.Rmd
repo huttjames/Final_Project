@@ -1,0 +1,47 @@
+---
+title: "about.rmd"
+author: "James Hutt"
+date: "26/02/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Repo URL: https://github.com/huttjames/final-project-26Feb.git
+
+<br/><br/>
+
+## Work Plan 
+The map of the continental United States is one of the most familiar outlines around the world. States are sized according to their actual area (give or take some distortion) and located next to each other, as in real life. But this is just one projection. Through this project I will allow the user to create new maps and network diagrams interactively. Proposed functionality will include:
+1) Basic - Scaling/sizing states by population, wealth etc 
+2) Intermediate - Relocating states in a network diagram based not on location but by relationships between the two. How does the US look if states with more migration are closer? Or states with more similar political views? Or more flights between them? 
+
+
+<br/><br/>
+
+## Discussion of Data Sources
+
+### 1. [State Networks dataset](https://ippsr.msu.edu/public-policy/state-networks)
+
+A dataset covering all 2550 directional pairs of states, including DC, with data split into Distance,Travel,Migration; Economic; Political; Policy; Demographic data. There are 114 variables available for each pair, described in the [code book](https://ippsr.msu.edu/sites/default/files/state_networks/state_networks_codebook.pdf). 
+
+The data is available without an API as a .csv or .xlsx file. The cleanliness of the data will allow me to do more manipulations with it. 
+
+
+Hat tip to [Data is Plural](https://tinyletter.com/data-is-plural/letters/data-is-plural-2019-09-18-edition) who featured this data set on their blog which first alerted me to its existence.  
+
+<br/><br/>
+
+### 2. [US Census Data](https://data.census.gov/cedsci/)
+
+The dataset from the 2010 national census. Available using the [tidycensus](https://walkerke.github.io/tidycensus/articles/basic-usage.html#searching-for-variables) package. In addition to demographic data which can be used to enrich the State Networks database, the census data also includes Geom data which can produce maps. The data is, if anything, too abundant with 3346 variables available for each state. 
+
+<br/><br/>
+
+## Work Plan 
+1. Narrow down which variables from US Census Data will allow me to produce interesting maps 
+2. Join the US census data to the diads. 
+3. Add the locations of US state capitals to the data set
+4. Develop code to amend the geom mapping data allowing manipulated maps to be created where location/size/fill are modified based on variables. 
