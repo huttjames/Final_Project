@@ -45,3 +45,7 @@ The dataset from the 2010 national census. Available using the [tidycensus](http
 2. Join the US census data to the diads. 
 3. Add the locations of US state capitals to the data set
 4. Develop code to amend the geom mapping data allowing manipulated maps to be created where location/size/fill are modified based on variables. 
+
+## Recent Progress
+1. Played around and explored Shiny App
+2. Developed log scale plots on maps and experimented with possible breaks and labels. 
