@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/586216/17ed75ce7b4b454e9dff5e3bf74730c7
+bundleId: https://api.rpubs.com/api/v1/document/586216/17ed75ce7b4b454e9dff5e3bf74730c7
+url: http://rpubs.com/huttjames/586216
+when: 1584530927.00737
