@@ -7,12 +7,17 @@
 #    http://shiny.rstudio.com/
 #
 
+# Load necessary libraries
+
 library(shiny)
 library(igraph)
 library(tidyverse)
 
+# Load custom function doc
+
 source("functions.R")
 
+# From here onwards the shiny app starts
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -42,7 +47,7 @@ server <- function(input, output) {
 
     output$netwPlot <- renderPlot({
         plot_network(scale_factor = (input$scale / 100))
-    })
+    }, height = 600, width = 900)
 }
 
 # Run the application 
