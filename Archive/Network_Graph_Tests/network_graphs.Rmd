@@ -1,0 +1,82 @@
+---
+title: "network_graph"
+author: "James Hutt"
+date: "18/03/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(igraph)
+library(tidyverse)
+```
+
+```{r state_relations, include=FALSE}
+
+# Suppressed the warning message as it is just information about the column
+# parsing types
+
+x <- read_csv("raw-data/statenetworks.csv", 
+              na = c("", "NA"))
+
+x <- x %>%
+  select(State1, State2, Border, RaceDif, State1_Pop, State2_Pop) %>% 
+  mutate(logpop = log(State1_Pop, 10)) %>% 
+  mutate(s1_larger = ifelse(State1_Pop > State2_Pop, TRUE, FALSE)) %>%
+  mutate(inverse_racedif = 1 / RaceDif)
+
+```
+```{r size_nodes, echo=FALSE}
+
+# node.size <- setNames(x$logpop * 2, x$State1)
+
+```
+
+```{r network_graph, echo=FALSE}
+
+edge_list <- x %>%
+  filter(Border == 1)
+
+network_inv_race <- graph_from_data_frame(edge_list, directed = FALSE) %>%
+  set_edge_attr("weight", value = edge_list$inverse_racedif)
+
+plot.igraph(network_inv_race, 
+     layout=layout_with_fr(network_inv_race,
+                           niter = 1000), 
+     rescale = TRUE,
+     vertex.color = "gray",
+     vertex.frame.color = "blue", 
+     vertex.label.dist = 0,
+     vertex.label.cex = 0.4,
+     main="US States Separated By Racial Differences Across Bordering States")
+
+```
+```{r network_graph_unique, echo=FALSE}
+
+# Repeat the same process but filtering only for edges where state 1 is larger.
+# This should mean each pair of vertices is only joine by 1 edge. Since the
+# weights were symmetric this should have no effect.
+
+edge_list_unique <- x %>%
+  filter(Border == 1) %>%
+  filter(s1_larger == TRUE)
+
+network_inv_race_unique <- graph_from_data_frame(edge_list_unique, directed = FALSE) %>%
+  set_edge_attr("weight", value = edge_list_unique$inverse_racedif)
+
+plot.igraph(network_inv_race_unique, 
+     layout=layout_with_fr(network_inv_race_unique,
+                           niter = 1000), 
+     rescale = TRUE,
+     vertex.color = "gray",
+     vertex.frame.color = "blue", 
+     vertex.label.dist = 0,
+     vertex.label.cex = 0.4,
+     main="US States Separated By Racial Differences Across Bordering States")
+
+
+```
+
+
+
