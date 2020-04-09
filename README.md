@@ -1,1 +1,1 @@
-# final-project-26Feb
+# A project to remap the USA into network diagrams based on various relationships between states (Population similarity / annual migration / flight routes) rather than geography. 
