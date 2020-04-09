@@ -32,7 +32,7 @@ server <- function(input, output) {
 
     output$netwPlot <- renderPlot({
         plot_network(scale_factor = (input$scale / 100))
-    }, height = 500, width = 750)
+    }, height = 1000, width = 1500)
 }
 
 # Run the application 
