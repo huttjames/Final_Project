@@ -3,13 +3,11 @@
 
 first_plot <- TRUE
 
-# Next I define a function called prepare plot. It will be run later in the code
-# only if this is the first plot. If it is not the first plot I will use the
-# outputs which have already been stored. Since I can only return one object
-# from a function in R all of the outputs are returned as a list at the end and
-# the elements of the list are accessed by a later function
 
-prepare_plot <- function(data_source = "raw-data/statenetworks.csv"){
+# Create a function to read in the data 
+
+read_data <- function(data_source = "raw-data/statenetworks.csv", 
+                      col_types=cols()){
   
   #Load the data into x
   
@@ -19,61 +17,75 @@ prepare_plot <- function(data_source = "raw-data/statenetworks.csv"){
   # Mutate the data to get the relevant variables and sensible relative scaling
   
   x <- x %>%
-    select(State1, State2, Border, RaceDif, State1_Pop, State2_Pop) %>% 
+    select(State1, State2, Border,
+           State1_Pop, State2_Pop, ACS_Migration,
+           Distance, State1_Long, State2_Long, State1_Lat, State2_Lat,
+           RaceDif, IncomingFlights, Imports, IdeologyDif, ReligDif) %>% 
     mutate(logpop = log(State1_Pop / 500000, 3)) %>% 
     mutate(s1_larger = ifelse(State1_Pop >= State2_Pop, TRUE, FALSE)) %>%
     mutate(inverse_racedif = 1 / RaceDif)
   
-  # Filtering only for edges where state 1 is larger. This should mean each pair
-  # of vertices is only joined by 1 edge. Since the weights were symmetric this
-  # should have no effect.
+  # Make this available as a global variable 
   
-  edge_list_unique <- x %>%
-    filter(Border == 1) %>%
-    filter(s1_larger == TRUE)
+  x <<- x
   
-  # Use this edge list to filter down the rows to distinct data entries only
+  # Also create a tibble of each state with necessary characteristics for later
   
-  state_data <- x %>%
-    filter(State1 %in% c(edge_list_unique$State1, edge_list_unique$State2)) %>%
-    select(State1, State1_Pop, logpop) %>%
-    distinct()
+  x_state_data <<- x %>%
+    select(State1, State1_Lat, State1_Long, State1_Pop, logpop) %>% 
+    distinct
+  
+}
+
+# Function to prepare the data to make into a network 
+
+trim_data <- function(only_border = TRUE, undirected = TRUE, data = x){
+  
+  # Mutate the original data and return the object as trimmed_x
+  # First check the border condition 
+  
+    if(only_border){
+      trimmed_x <- x %>% filter(Border == 1)
+    }
+    else{
+      trimmed_x <- x
+    }
+  
+  # Then check the undirected condition 
+  
+    if(undirected){
+      trimmed_x <- trimmed_x %>% filter(s1_larger == TRUE)
+    }
+  
+  trimmed_x <<- trimmed_x
+}
+
+
+# Since I can only return one object from a function in R all of the outputs are
+# returned as a list at the end and the elements of the list are accessed by a
+# later function. This function creates the layout for a network if called. 
+
+prepare_plot <- function(data = trimmed_x){
   
   # Assign this network to an object
   
-  network_inv_race_unique <- graph_from_data_frame(edge_list_unique, directed = FALSE, vertices = state_data) %>%
-    set_edge_attr("weight", value = edge_list_unique$inverse_racedif)
+  network <- graph_from_data_frame(trimmed_x,
+                                   directed = FALSE,
+                                   vertices = x_state_data) %>%
+    set_edge_attr("weight", value = trimmed_x$inverse_racedif)
   
   # Assign the layout to an object to be returned
   
-  l <- layout_with_fr(network_inv_race_unique)
+  l <- layout_with_fr(network)
   l <- norm_coords(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
   
   # Assign the degree of nodes to an object to be returned
   
-  deg <- degree(network_inv_race_unique, mode = "all")
+  deg <- degree(network, mode = "all")
   
-  # Sized by population is commented out so only the sized by degree code is
-  # running
+    # Return a list of outputs for use in the next function
   
-        # plot.igraph(network_inv_race_unique, 
-        #             layout= l, 
-        #             rescale = FALSE,
-        #             vertex.color = "gray",
-        #             vertex.frame.color = "blue", 
-        #             vertex.label.dist = 0,
-        #             vertex.label.cex = 0.4,
-        #             main="US States Separated By Racial Differences Across Bordering States:\n Sized by Population",
-        #             frame = F,
-        #             vertex.size = 5 * V(network_inv_race_unique)$logpop)
-        
-        # Reproduce plot but with degree causing sizing 
-  
-
-  
-  # Return a list of outputs for use in the next function
-  
-  return(list(network = network_inv_race_unique, l = l, deg = deg))
+  return(list(network = network, l = l, deg = deg))
   
 }
 

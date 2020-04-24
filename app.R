@@ -4,7 +4,7 @@ library(shiny)
 library(igraph)
 library(tidyverse)
 
-# Load custom function doc. Edit 
+# Load custom function doc 
 
 source("code_files/functions.R")
 
