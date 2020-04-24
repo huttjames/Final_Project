@@ -39,6 +39,11 @@ ui <- fluidPage(
                           "Size of Nodes:",
                           min = 0,
                           max = 200,
+                          value = 100),
+              sliderInput("edge_proportion",
+                          "Proportion of Edges to include:",
+                          min = 0,
+                          max = 100,
                           value = 100)
         )
 )
@@ -56,6 +61,7 @@ server <- function(input, output) {
         make_plot_master(edges_by = input$variable,
                          nodes_by = input$node_size,
                          only_border = input$only_border,
+                         edge_proportion = (input$edge_proportion / 100),
                          scale_factor = (input$scale / 100))
     }, height = 900, width = 1500)
 }
