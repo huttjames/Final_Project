@@ -23,7 +23,7 @@ read_data <- function(data_source = "raw-data/statenetworks.csv",
            inverse_distance_sq = 1 / Distance^1.3,
            inverse_migration = log(ACS_Migration + 1),
            IncomingFlights = log(IncomingFlights + 1),
-           inverse_imports = 1 / log(Imports), 
+           inverse_imports = 1 / log(Imports + 1), 
            inverse_ideologydif = 1 / (IdeologyDif + 0.001), 
            inverse_religdif = 1 / ReligDif)
     
