@@ -18,21 +18,40 @@ ui <- fluidPage(
 
     # Show a plot of the generated distribution
     mainPanel(
+              plotOutput("netwPlot"),
+              selectInput("variable", "Position States By:",
+                          c("Racial Similarity" = "RaceDif",
+                            "Distance between State Capitals" = "Distance",
+                            "Migration" = "ACS_Migration",
+                            "Flights" = "IncomingFlights",
+                            "Trade (Imports)" = "Imports",
+                            "Political Ideology Differences" = "IdeologyDif",
+                            "Religious Differences" = "ReligDif")),
+              selectInput("node_size", "States Sized by:",
+                          c("Number of State Borders" = "borders",
+                            "Population" = "population")),
               sliderInput("scale",
-                   "Size of Nodes:",
-                   min = 0,
-                   max = 200,
-                   value = 100), 
-              plotOutput("netwPlot"), 
+                          "Size of Nodes:",
+                          min = 0,
+                          max = 200,
+                          value = 100)
         )
 )
 
 # Define server logic required to network plot
 server <- function(input, output) {
 
+    # Load data 
+    
+    read_data()
+    
+    # Get plotting
+    
     output$netwPlot <- renderPlot({
-        plot_network(scale_factor = (input$scale / 100))
-    }, height = 1000, width = 1500)
+        make_plot_master(edges_by = input$variable,
+                         nodes_by = input$node_size,
+                         scale_factor = (input$scale / 100))
+    }, height = 900, width = 1500)
 }
 
 # Run the application 
