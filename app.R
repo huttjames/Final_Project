@@ -31,7 +31,7 @@ ui <- fluidPage(
                           c("Population" = "pop",
                             "Number of State Borders" = "borders"
                             )),
-              selectInput("borders_only", "Limit Relationships to Bordering States?",
+              selectInput("only_border", "Limit Relationships to Bordering States?",
                           c("Yes" = TRUE,
                             "No" = FALSE
                           )),
@@ -55,7 +55,7 @@ server <- function(input, output) {
     output$netwPlot <- renderPlot({
         make_plot_master(edges_by = input$variable,
                          nodes_by = input$node_size,
-                         borders_only = input$borders_only,
+                         only_border = input$only_border,
                          scale_factor = (input$scale / 100))
     }, height = 900, width = 1500)
 }
