@@ -2,19 +2,23 @@
 # returned as a list at the end and the elements of the list are accessed by a
 # later function. This function creates the layout for a network if called. 
 
-prepare_plot <- function(data = trimmed_x, nodes_by = "borders"){
+prepare_plot <- function(data = trimmed_x){
   
   # Modify x_state_data to drop states without borders if necessary
   
   x_state_data <- x_state_data %>% 
     filter(State1 %in% c(trimmed_x$State1, trimmed_x$State2))
   
+  x_state_data_pops <<- as.matrix(tibble(x_state_data$State1,
+                              x_state_data$logpop))
+  
   # Assign this network to an object
   
-  network <- graph_from_data_frame(trimmed_x,
+  network <<- graph_from_data_frame(trimmed_x,
                                    directed = FALSE,
                                    vertices = x_state_data) %>%
-    set_edge_attr("weight", value = trimmed_x$inverse_racedif)
+    set_edge_attr("weight", value = trimmed_x$inverse_racedif) %>%
+    set_vertex_attr("pop", index = x_state_data$State1, value = x_state_data$logpop)
   
   # Assign the layout to an object to be returned
   

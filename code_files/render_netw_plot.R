@@ -1,5 +1,14 @@
 
-render_netw_plot <- function(scale_factor = 1){
+render_netw_plot <- function(scale_factor = 1, nodes_by = "borders"){
+  
+  # Set vertex size argument 
+  
+  if(nodes_by == "borders"){
+    vertex_size_by <- (2 * prep$deg)
+  }
+  else{
+    vertex_size_by <- (3 * V(prep$network)$pop)
+  }
   
   # Prep must exist for this function to work, but this function will only be
   # called from within the master function which produces prep
@@ -17,7 +26,8 @@ render_netw_plot <- function(scale_factor = 1){
               vertex.label.cex = 1,
               main="US States Separated By Racial Differences Across Bordering States: \n Sized by Number of State Borders",
               frame = F,
-              vertex.size = (3 * prep$deg) * scale_factor)
+              vertex.size = vertex_size_by * scale_factor)
+  
   
   
 }

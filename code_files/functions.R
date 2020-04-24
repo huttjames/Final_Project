@@ -20,7 +20,7 @@ make_plot_master <- function(edges_by = "RaceDif",
   
   if(first_plot){
     trim_data(edges_by = edges_by)
-    prep <<- prepare_plot(nodes_by = nodes_by)
+    prep <<- prepare_plot()
     first_plot <<- FALSE
 
     # Save the 3 variables as global variables to check in the future if they have
@@ -32,15 +32,16 @@ make_plot_master <- function(edges_by = "RaceDif",
     
     # Plot 
     
-    render_netw_plot(scale_factor = scale_factor)
+    render_netw_plot(scale_factor = scale_factor, 
+                     nodes_by = nodes_by)
     
     return()
     
   }
   
-  # If only scale factor has changed then replot with the new scale facter 
+  # If only scale factor or nodes_by has changed then replot with the new scale facter 
   
-  if(scale_factor != last_scale_factor) {
+  if(scale_factor != last_scale_factor | nodes_by != last_nodes_by) {
     
     # Save the 3 variables as global variables to check in the future if they have
     # changed
@@ -51,30 +52,8 @@ make_plot_master <- function(edges_by = "RaceDif",
     
     # Plot 
     
-    render_netw_plot(scale_factor = scale_factor)
-    
-    return()
-    
-  }
-  
-  # If only nodes_by has changed then rerun prepare_plot then plot 
-  
-  if(nodes_by != last_nodes_by) {
-    
-    # Save the 3 variables as global variables to check in the future if they have
-    # changed
-    
-    last_edges_by <<- edges_by
-    last_nodes_by <<- nodes_by
-    last_scale_factor <<- scale_factor
-    
-    # Rerun prepare_plot specifying the new node sizing 
-    
-    prep <<- prepare_plot(nodes_by = nodes_by)
-    
-    # Plot 
-    
-    render_netw_plot(scale_factor = scale_factor)
+    render_netw_plot(scale_factor = scale_factor, 
+                     nodes_by = nodes_by)
     
     return()
     
@@ -97,11 +76,12 @@ make_plot_master <- function(edges_by = "RaceDif",
     
     # Rerun prepare_plot specifying the new node sizing 
     
-    prep <<- prepare_plot(nodes_by = nodes_by)
+    prep <<- prepare_plot()
     
     # Plot 
     
-    render_netw_plot(scale_factor = scale_factor)
+    render_netw_plot(scale_factor = scale_factor, 
+                     nodes_by = nodes_by)
     
     return()
     
