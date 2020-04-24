@@ -28,8 +28,9 @@ ui <- fluidPage(
                             "Political Ideology Differences" = "IdeologyDif",
                             "Religious Differences" = "ReligDif")),
               selectInput("node_size", "States Sized by:",
-                          c("Number of State Borders" = "borders",
-                            "Population" = "population")),
+                          c("Population" = "pop",
+                            "Number of State Borders" = "borders"
+                            )),
               sliderInput("scale",
                           "Size of Nodes:",
                           min = 0,

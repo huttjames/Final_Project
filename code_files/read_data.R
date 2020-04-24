@@ -18,6 +18,13 @@ read_data <- function(data_source = "raw-data/statenetworks.csv",
     mutate(logpop = log(State1_Pop / 500000, 3)) %>% 
     mutate(s1_larger = ifelse(State1_Pop >= State2_Pop, TRUE, FALSE)) %>%
     mutate(inverse_racedif = 1 / RaceDif)
+    
+  borders <- x %>%
+    group_by(State1) %>%
+    summarise(total_borders = sum(Border))
+  
+  x <- x %>%
+    left_join(borders, by = c("State1" = "State1"))
   
   # Make this available as a global variable 
   
@@ -26,7 +33,7 @@ read_data <- function(data_source = "raw-data/statenetworks.csv",
   # Also create a tibble of each state with necessary characteristics for later
   
   x_state_data <<- x %>%
-    select(State1, State1_Lat, State1_Long, State1_Pop, logpop) %>% 
-    distinct
+    select(State1, State1_Lat, State1_Long, State1_Pop, logpop, total_borders) %>% 
+    distinct()
   
 }

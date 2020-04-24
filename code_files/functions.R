@@ -19,7 +19,7 @@ make_plot_master <- function(edges_by = "RaceDif",
   # If this is the first plot then trim and prepare the data to produce the plot
   
   if(first_plot){
-    trim_data(edges_by = edges_by)
+    trim_data()
     prep <<- prepare_plot()
     first_plot <<- FALSE
 
@@ -72,7 +72,7 @@ make_plot_master <- function(edges_by = "RaceDif",
     
     # First trim the data 
     
-    trim_data(edges_by = edges_by)
+    trim_data()
     
     # Rerun prepare_plot specifying the new node sizing 
     

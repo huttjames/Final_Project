@@ -1,13 +1,13 @@
 
-render_netw_plot <- function(scale_factor = 1, nodes_by = "borders"){
+render_netw_plot <- function(scale_factor = 1, nodes_by = "pop"){
   
   # Set vertex size argument 
   
-  if(nodes_by == "borders"){
-    vertex_size_by <- (2 * prep$deg)
+  if(nodes_by == "pop"){
+    vertex_size_by <- (3 * V(prep$network)$pop)
   }
   else{
-    vertex_size_by <- (3 * V(prep$network)$pop)
+    vertex_size_by <- (2 * V(prep$network)$total_borders)
   }
   
   # Prep must exist for this function to work, but this function will only be
@@ -24,7 +24,7 @@ render_netw_plot <- function(scale_factor = 1, nodes_by = "borders"){
               vertex.frame.color = "blue", 
               vertex.label.dist = 0,
               vertex.label.cex = 1,
-              main="US States Separated By Racial Differences Across Bordering States: \n Sized by Number of State Borders",
+              main="US States Separated By TO DO: \n Sized by TODO",
               frame = F,
               vertex.size = vertex_size_by * scale_factor)
   

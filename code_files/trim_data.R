@@ -1,7 +1,6 @@
 # Function to prepare the data to make into a network 
 
-trim_data <- function(edges_by = "RaceDif", 
-                      only_border = TRUE, 
+trim_data <- function(only_border = TRUE, 
                       undirected = TRUE, 
                       data = x){
   
