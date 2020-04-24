@@ -14,6 +14,7 @@ first_plot <- TRUE
 
 make_plot_master <- function(edges_by = "RaceDif",
                              nodes_by = "borders",
+                             borders_only = TRUE,
                              scale_factor = 1){
   
   # If this is the first plot then trim and prepare the data to produce the plot
@@ -28,6 +29,7 @@ make_plot_master <- function(edges_by = "RaceDif",
     
     last_edges_by <<- edges_by
     last_nodes_by <<- nodes_by
+    last_borders_only <<- borders_only
     last_scale_factor <<- scale_factor
     
     # Plot 
@@ -48,6 +50,7 @@ make_plot_master <- function(edges_by = "RaceDif",
     
     last_edges_by <<- edges_by
     last_nodes_by <<- nodes_by
+    last_borders_only <<- borders_only
     last_scale_factor <<- scale_factor
     
     # Plot 
@@ -61,14 +64,16 @@ make_plot_master <- function(edges_by = "RaceDif",
   
   # If edges_by has changed then rerun prepare_plot then plot 
   
-  if(edges_by != last_edges_by) {
+  if(edges_by != last_edges_by | borders_only != last_borders_only) {
     
     # Save the 3 variables as global variables to check in the future if they have
     # changed
     
     last_edges_by <<- edges_by
     last_nodes_by <<- nodes_by
+    last_borders_only <<- borders_only
     last_scale_factor <<- scale_factor
+    
     
     # First trim the data 
     
