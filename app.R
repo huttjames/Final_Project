@@ -16,10 +16,10 @@ ui <- fluidPage(fluidPage(theme = shinytheme("flatly"),
                           
                           # Adding the favicon using code from Bridger Gordons project for the HTML
                           
-                          HTML('<script> document.title = "Reimagining the United States"; </script>'),
+                          HTML('<script> document.title = "Reshaping the United States"; </script>'),
                           tags$head(tags$link(rel="shortcut icon", href="https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/9/9c/Harvard_shield_wreath.png/revision/latest?cb=20190302143211")),
     navbarPage(
-        "Reimagining the United States: Geography based on State Relations",
+        "Reshaping the United States: Geography based on State Relations",
     tabPanel("Interactive Map",
       sidebarLayout(
           sidebarPanel(
