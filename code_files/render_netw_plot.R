@@ -46,7 +46,7 @@ render_netw_plot <- function(scale_factor = 1, edges_by = "RaceDif", nodes_by = 
               vertex.frame.color = "blue", 
               vertex.label.dist = 0,
               vertex.label.cex = 1,
-              main=paste("US States Separated by", name_edge, "\n", name_vertex),
+              main=paste("US States Separated by", name_edge, name_vertex),
               frame = F,
               vertex.size = vertex_size_by * scale_factor)
   
