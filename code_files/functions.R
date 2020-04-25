@@ -33,7 +33,7 @@ make_plot_master <- function(edges_by = "RaceDif",
                           edge_proportion = edge_proportion)
     first_plot <<- FALSE
 
-    # Save the 3 variables as global variables to check in the future if they have
+    # Save the 5 variables as global variables to check in the future if they have
     # changed
     
     last_edges_by <<- edges_by
@@ -108,6 +108,14 @@ make_plot_master <- function(edges_by = "RaceDif",
     return()
     
   }
+  
+  # If we get to this point it is neither the first plot nor has anything
+  # changed so we should just plot again what we have lined up
+  
+  render_netw_plot(scale_factor = scale_factor, 
+                   edges_by = edges_by,
+                   nodes_by = nodes_by)
+  
 
 }
 
