@@ -16,8 +16,22 @@ prepare_plot <- function(data = trimmed_x,
   network <<- graph_from_data_frame(trimmed_x,
                                    directed = FALSE,
                                    vertices = x_state_data) %>%
-    set_vertex_attr("pop", index = x_state_data$State1, value = x_state_data$logpop) %>%
-    set_vertex_attr("borders", index = x_state_data$State1, value = x_state_data$total_borders) 
+    set_vertex_attr("pop", index = x_state_data$State1, 
+                    value = x_state_data$logpop) %>%
+    set_vertex_attr("borders", index = x_state_data$State1, 
+                    value = x_state_data$total_borders) %>%
+    set_vertex_attr("age", index = x_state_data$State1, 
+                    value = x_state_data$median_age) %>%
+    set_vertex_attr("urban", index = x_state_data$State1, 
+                    value = x_state_data$prop_urban) %>%
+    set_vertex_attr("rural", index = x_state_data$State1, 
+                    value = x_state_data$prop_rural) %>%
+    set_vertex_attr("white", index = x_state_data$State1, 
+                    value = x_state_data$prop_white) %>%
+    set_vertex_attr("black", index = x_state_data$State1, 
+                    value = x_state_data$prop_black) %>%
+    set_vertex_attr("hispanic", index = x_state_data$State1, 
+                    value = x_state_data$prop_hisp)
   
   # Assign the values required to the edge_variable
   

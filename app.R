@@ -29,7 +29,13 @@ ui <- fluidPage(
                             "Religious Differences" = "ReligDif")),
               selectInput("node_size", "States Sized by:",
                           c("Population" = "pop",
-                            "Number of State Borders" = "borders"
+                            "Number of State Borders" = "borders",
+                            "Median Age" = "age",
+                            "Proportion of Urban Population" = "urban",
+                            "Proportion of Rural Population" = "rural",
+                            "Proportion of White Population" = "white",
+                            "Proportion of Black/African American Population" = "black",
+                            "Proportion of Hispanic/Latino American Population" = "hispanic"
                             )),
               selectInput("only_border", "Limit Relationships to Bordering States?",
                           c("Yes" = TRUE,

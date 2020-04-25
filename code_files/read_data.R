@@ -40,8 +40,16 @@ read_data <- function(data_source = "raw-data/statenetworks.csv",
   
   # Also create a tibble of each state with necessary characteristics for later
   
-  x_state_data <<- x %>%
-    select(State1, State1_Lat, State1_Long, State1_Pop, logpop, total_borders) %>% 
+  x_state_data <- x %>%
+    select(State1, State1_Pop, logpop, total_borders) %>% 
     distinct()
   
+  # Load in census data 
+  
+  state_census_data_to_join <- readRDS("raw-data/Tidycensus/state_census_data.rds")
+  
+  # Join census data to Michigan data 
+  
+  x_state_data <<- x_state_data %>%
+    left_join(state_census_data_to_join, by = c("State1" = "state"))
 }

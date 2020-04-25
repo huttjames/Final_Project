@@ -1,0 +1,50 @@
+---
+title: "tidycensus"
+author: "James Hutt"
+date: "26/02/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidycensus)
+library(tidyverse)
+```
+
+```{r variables, echo=FALSE}
+
+v10 <- load_variables(2010, "sf1", cache = TRUE)
+
+# View(v10)
+
+```
+
+```{r tidycensus, echo=FALSE}
+
+# Load variables of interest
+
+census_data <- get_decennial(geography = "state",
+                       variables = c("P001001", "P002005", "P002002", "P003002",
+                                     "P003003","P004003","P013001"),
+                       year = 2010,
+                       output = "wide",
+                       geometry = FALSE) %>%
+  rename(state = NAME)
+
+
+# Mutate table to leave ratios of interest
+
+state_census_data <- census_data %>%
+  mutate(prop_rural = P002005 / P001001,
+         prop_urban = P002002 / P001001,
+         prop_white = P003002 / P001001,
+         prop_black = P003003 / P001001, 
+         prop_hisp = P004003 / P001001,
+         median_age = P013001) %>%
+  select(state, prop_rural:median_age)
+
+saveRDS(state_census_data, "state_census_data.rds")
+
+```
+
+
