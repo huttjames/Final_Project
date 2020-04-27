@@ -99,18 +99,22 @@ server <- function(input, output) {
     output$about_me <- renderUI({HTML("<b> About the Developer </b> <br/><br/>")})
     
     output$bioinfo <- renderUI({HTML(
-    "<br/>
+    "<br>
     <b> Name:</b> James Hutt 
-    <br/>
+    <br>
     <b>Email:</b> jhutt@g.harvard,edu
-    <br/><br/>
-    <b>Bio:</b> James is studying at Harvard as a Special Student in the Graduate School of Arts and Sciences until May 2020. James' interests are centred around how technology impacts out societies, cultures and politics. During his time at Harvard James took CS50 as well as GOV 1005 (which this project is a part of) but refuses to pick a side in the long running battle over which is better. 
-    <br/><br/>
+    <br><br>
+    <b>Bio:</b> James is studying at Harvard as a Special Student in the Graduate School of Arts and Sciences until May 2020. 
+    James' interests are centred around how technology impacts out societies, cultures and politics. 
+    During his time at Harvard James took CS50 as well as GOV 1005 (which this project is a part of) but refuses to pick a side in the long running battle over which is better. 
+    <br><br>
     <a href='https://github.com/huttjames/'> GitHub <a/>
-    <br/>
+    <br>
     <a href='https://www.linkedin.com/in/james-w-hutt/'> LinkedIn <a/><br/><br/>
     <a href='https://github.com/huttjames/Final_Project'> Repo for this project <a/>
-    <br/>
+    <br><br>
+    <b> Thanks: </b> James would like to express particular thanks to Preceptor David Kane and TF Mitchell Kilborn, 
+    without who's teaching, support and help little of this project would have been possible. 
     "
                                      )})
     
@@ -121,8 +125,127 @@ server <- function(input, output) {
         })
     
     output$proj_info <- renderUI({
-        HTML("<br> <h2> About This Project:</h2>
-                            To Do 
+        HTML("<br>
+              <h2><b> About This Project</b></h2>
+              <h3><b> Sources of Data</b></h3>
+              <ul>
+                  <li>
+                      <a href='https://ippsr.msu.edu/public-policy/state-networks'> State Networks - MSU <a/><br>
+                      A dataset covering all 2550 directional pairs of states, including DC, with data split into 
+                      Distance,Travel,Migration; Economic; Political; Policy; Demographic data. 
+                      <br>
+                      There are 114 variables available for each pair, described in the 
+                      <a href='https://ippsr.msu.edu/sites/default/files/state_networks/state_networks_codebook.pdf'> Code Book <a/>
+                      <br> 
+                      The data is available without an API as a .csv or .xlsx file. 
+                      <br> 
+                      Hat tip to <a href='https://tinyletter.com/data-is-plural/letters/data-is-plural-2019-09-18-edition'> Data is Plural <a/> who featured this data set on their blog which first alerted me to its existence. 
+                  </li><br>
+                  <li>
+                      <a href='https://data.census.gov/cedsci/'> US Census - 2010 <a/><br>
+                      The dataset from the 2010 national census. 
+                      Available using the <a href='https://walkerke.github.io/tidycensus/articles/basic-usage.html#searching-for-variables'> Tidycensus <a/>
+                      The data is, if anything, too abundant with 3346 variables available for each state. 
+                  </li>
+              </ul>
+              
+          
+              
+              <br>
+              <h3><b> Explananation of Variables</b></h3>
+              <h4><b> Variables to Position the States </b></h4>
+              <ul>
+                  <li>
+                      <b>Racial Similarity</b><br>
+                      <em>Data Source</em>: MSU 
+                      <br>
+                      <em>Description</em>: RaceDif is the total absolute value of differences in each racial group between two states, where the possible racial groups are: Latinx, White, Black, Asian and Native American.
+                      <br>
+                      <em>Transformation</em>: The variable 1 / RaceDif is used for plotting, so racially similar states, which have a smaller value of RaceDif are closer in space.
+                  </li>
+                  <li>
+                      <b>Distance Between State Capitals</b><br>
+                      <em>Data Source</em>: MSU 
+                      <br>
+                      <em>Description</em>: Haversine distance between State 1 and State 2 Capitals in kilometers. Calculated using the “geosphere” package.
+                      <br>
+                      <em>Transformation</em>: The variable 1 / Distance^1.3 is used for plotting, so geographically closer capitals are plotted more closely. The power is included to increase dispersion. 
+                  </li>
+                  <li>
+                      <b>Migration</b><br>
+                      <em>Data Source</em>: MSU 
+                      <br>
+                      <em>Description</em>: ACS_Migration is the number of people migrating from State 2 to State 1 in one year, 2017. Population and
+                                            ACS_Migration variables Collected from U.S. Census American Community
+                                            Survey
+                      <br>
+                      <em>Transformation</em>: The variable log(ACS_Migration + 1) is plotted, so that states with more migration are plotted more closely together. 
+                      There are two lines connecting each state representing migration in each direction. 
+                      The log transform decreases dispersion, preventing only the largest values being observable. 
+                      The +1 shift accounts for 0 values in linear space, which then have 0 value following the log transform. 
+                  </li>
+                  <li>
+                      <b>Flights</b><br>
+                      <em>Data Source</em>: MSU 
+                      <br>
+                      <em>Description</em>: IncomingFlights shows the number of Flights from State 2 with destination in State 1. From Bureau of Transportation
+                                            Statistics (BTS) Origin and Destination Survey, DB1B Coupon (10% sample of
+                                            airline tickets from reporting carriers). 2019.
+                      <br>
+                      <em>Transformation</em>: The variable log(IncomingFlights + 1) is plotted, so that states with more flights are plotted more closely together. 
+                      There are two lines connecting each state representing flights in each direction. 
+                      The log transform decreases dispersion, preventing only the largest values being observable. 
+                      The +1 shift accounts for 0 values in linear space, which then have 0 value following the log transform.
+                  </li>
+                  <li>
+                      <b>Trade (Imports)</b><br>
+                      <em>Data Source</em>: MSU 
+                      <br>
+                      <em>Description</em>: Imports is the aggregated value of trade from State 2 to State 1 in one year. 2017 BTS
+                                            Commodity Flow Survey. BTS provide the following information: 'The CFS is a shipper survey of approximately 100,000 establishments from
+                                            the industries of mining, manufacturing, wholesale trade, auxiliaries (i.e.
+                                            warehouses and distribution centers), and select retail and service trade
+                                            industries that ship commodities. Data requested by the CFS includes the
+                                            type of commodities shipped, their origin and destination, their value and
+                                            weight, and mode(s) of transport. The CFS provides a comprehensive
+                                            multimodal picture of national freight flows and represents the only publicly
+                                            available source of data for the highway mode.'
+                      <br>
+                      <em>Transformation</em>: The variable log(Imports + 1) is plotted, so that states with more trade are plotted more closely together. 
+                      There are two lines connecting each state representing imports in each direction. 
+                      The log transform decreases dispersion, preventing only the largest values being observable. 
+                      The +1 shift accounts for 0 values in linear space, which then have 0 value following the log transform. 
+                  </li>
+                  <li>
+                      <b>Political Ideology Differences</b><br>
+                      <em>Data Source</em>: MSU 
+                      <br>
+                      <em>Description</em>: IdeologyDif is the difference between the two states ideology, From Correlates of State Policy Project. 'Yearly measure,
+                                            giving the proportion of liberal identifiers minus the proportion of conservative
+                                            identifiers in each state. A positive score indicates a more liberal state citizenry.'
+                      <br>
+                      <em>Transformation</em>: The variable 1 / (abs(IdeologyDif) + 0.001) is plotted to ensure that states with more similar ideologies are plotted more closely together. 
+                      The abs term ignores the difference of direction of difference. 
+                      The + 0.001 transformation removes the concern around 0 values. 
+                  </li>
+                  <li>
+                      <b>Religious Differences</b><br>
+                      <em>Data Source</em>: MSU 
+                      <br>
+                      <em>Description</em>: ReligDif is the Total absolute value of differences in each of the following religious groups:
+                                            Evangelicals, Mainline Protestants, Black Protestants, Catholics, Mormons,
+                                            Jews, Muslims, Buddhists, Hindus, and Nones.
+                      <br>
+                      <em>Transformation</em>: The variable 1 / (ReligDif + 0.001) is plotted to ensure that states with more similar ideologies are plotted more closely together. 
+                      The abs term ignores the difference of direction of difference. 
+                      The + 0.001 transformation removes the concern around 0 values.
+                  </li>
+              </ul>
+              
+              <h4><b> Variables to Size the States (Nodes)</b></h4>
+              <ul>
+              TODO
+              </ul>
                              
          <br> <br>")
     })
