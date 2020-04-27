@@ -125,8 +125,13 @@ server <- function(input, output) {
         })
     
     output$proj_info <- renderUI({
-        HTML("<br>
-              <h2><b> About This Project</b></h2>
+        HTML("<h2><b> About This Project</b></h2>
+              <h3><b> Introduction</b></h3>
+              <p> The map of the state outlines is one of the most recognisable images in all of geography and politics. 
+              But, with states increasingly defined by their composition rather than location, simply thinking of which states are next to each other spatially may be insufficient for understanding how they relate.
+              This project reshapes the US,mapping states according to flight paths, migration, and political, religious and racial homogeneity. </p>
+              <br>
+              <p> Finally, the East and West Coast can be together, like they always wanted.</p>
               <h3><b> Sources of Data</b></h3>
               <ul>
                   <li>
@@ -244,7 +249,43 @@ server <- function(input, output) {
               
               <h4><b> Variables to Size the States (Nodes)</b></h4>
               <ul>
-              TODO
+                  <li>
+                      <b>Population</b><br>
+                      <em>Data Source</em>: MSU 
+                      <br>
+                      <em>Description</em>: Population in 2017 accoring to the State Networks data set.
+                      <br>
+                      <em>Transformation</em>: Population / 500,000 is put on a log base 3 scale. 
+                      This reduces dispersion between the very large and very small states to make nodes easier to observe. 
+                      The division (which is a linear shift in log space) means that the range of node sizes is appropriate at 100% magnification. 
+                  </li>
+                  <li>
+                      <b>Number of State Borders</b><br>
+                      <em>Data Source</em>: MSU 
+                      <br>
+                      <em>Description</em>: Sum of the number of state pairs which share a border for the state in question. 
+                      <br>
+                      <em>Transformation</em>: The MSU dataset presents a binary Border variable for each state pair. 
+                      These are summed by state for plotting. Sizes are defined as 2 * number of borders. 
+                  </li>
+                  <li>
+                      <b>Median Age</b><br>
+                      <em>Data Source</em>: US Census 2010 
+                      <br>
+                      <em>Description</em>: Variable P013001 from the US Census. Median Age by state. 
+                      <br>
+                      <em>Transformation</em>: Nodes are sized according to P013001 - 25, to improve dispersion and maintain node sizes within an easily visible range.  
+                  </li>
+                  <li>
+                      <b>Proportion of ... Population</b><br>
+                      <em>Data Source</em>: US Census 2010 
+                      <br>
+                      <em>Description</em>: This variable represents the ratio of 
+                      P002005 (rural), P002002 (urban), P003002 (white), P003003 (black) and P004003 (hispanic) populations to 
+                      P001001 (total) populations according to the 2010 census. 
+                      <br>
+                      <em>Transformation</em>: Size is equal to the proportion * 20, to give nodes in the size 0 to 20 for 0 to 100% respectively. 
+                  </li>
               </ul>
                              
          <br> <br>")

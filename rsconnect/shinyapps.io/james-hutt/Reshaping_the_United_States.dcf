@@ -5,8 +5,8 @@ account: james-hutt
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2184380
-bundleId: 3063532
+bundleId: 3071945
 url: https://james-hutt.shinyapps.io/Reshaping_the_United_States/
-when: 1587824580.79181
+when: 1587997495.9246
 asMultiple: FALSE
 asStatic: FALSE
