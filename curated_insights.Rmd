@@ -97,7 +97,7 @@ img <- image_join(img)
 
 # convert pngs to one gif using ImageMagick
 animation <- image_animate(image_scale(img, "900x900"), 
-                           fps = 1, 
+                           fps = 0.5, 
                            dispose = "previous",
                            optimize = TRUE)
 

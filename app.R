@@ -304,15 +304,20 @@ server <- function(input, output) {
     })
     
     # Code for curated insights
-    output$CI_1 <- renderUI({HTML("<b> TO DO </b> <br/><br/>")})
+    output$CI_1 <- renderUI({HTML("<h2> 1) Delaware is the odd one out when it comes to flights </h2>
+                                  All the states form a giant component even when a very low fraction of edges are considered. Delaware has no flights into it at all. <br/>")})
     
-    output$CI_2 <- renderUI({HTML("<b> TO DO </b> <br/><br/>")})
+    output$CI_2 <- renderUI({HTML("<h2> 2) New England sticks out as racially distinct. </h2>
+                                  New York and New Jersey don't quite fit with any of the states around them. If you squint this almost looks like the map we are used to, just rotated 90% <br/>")})
     
-    output$CI_3 <- renderUI({HTML("<b> TO DO </b> <br/><br/>")})
+    output$CI_3 <- renderUI({HTML("<h2> 3) Utah is a strange place. That'll be the Mormons I guess.  </h2>
+                                  Utah is the clear outlier religiously. Also, and more surprisingly, the youngest state which is clearly visible here. As we plot fewer and few edges the states hold together relatively well apart from Utah.  <br/>")})
     
-    output$CI_4 <- renderUI({HTML("<b> TO DO </b> <br/><br/>")})
+    output$CI_4 <- renderUI({HTML("<h2> 4) Ideological differences - the coasts flee the centre </h2>
+                                  We all know the coasts are distinct, but this shows us quite how much so. It's not true to say this is all a rural-urban divide however... <br/>")})
     
-    output$CI_5 <- renderUI({HTML("<b> TO DO </b> <br/><br/>")})
+    output$CI_5 <- renderUI({HTML("<h2> 5) Bringing distance back </h2>
+                                  To end on a familiar note I plot by distance between state capitals. Comforting to see that Alaska and Hawaii are far from the centre as they should be.  <br/>")})
     
     # Code for Walkthrough video 
     
