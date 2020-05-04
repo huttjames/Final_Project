@@ -321,7 +321,7 @@ server <- function(input, output) {
     
     # Code for Walkthrough video 
     
-        output$video <- renderUI({embed_url("https://youtu.be/vsEeqdtgrqQ")})
+        output$video <- renderUI({embed_url("https://youtu.be/E6dRYAZgvog")})
     
 }
 
