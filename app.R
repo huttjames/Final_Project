@@ -61,6 +61,18 @@ ui <- fluidPage(fluidPage(theme = shinytheme("flatly"),
           )
       )
     ),
+    tabPanel("Curated Insights",
+             htmlOutput("CI_1"), 
+             HTML('<center><img src="flights.gif" width="700"></center>'),
+             htmlOutput("CI_2"), 
+             HTML('<center><img src="race.gif" width="700"></center>'),
+             htmlOutput("CI_3"), 
+             HTML('<center><img src="religion.gif" width="700"></center>'),
+             htmlOutput("CI_4"), 
+             HTML('<center><img src="political.gif" width="700"></center>'),
+             htmlOutput("CI_5"), 
+             HTML('<center><img src="distance.gif" width="700"></center>'),
+    ),
     tabPanel("About",
              sidebarLayout(
                  sidebarPanel(
@@ -290,6 +302,17 @@ server <- function(input, output) {
                              
          <br> <br>")
     })
+    
+    # Code for curated insights
+    output$CI_1 <- renderUI({HTML("<b> TO DO </b> <br/><br/>")})
+    
+    output$CI_2 <- renderUI({HTML("<b> TO DO </b> <br/><br/>")})
+    
+    output$CI_3 <- renderUI({HTML("<b> TO DO </b> <br/><br/>")})
+    
+    output$CI_4 <- renderUI({HTML("<b> TO DO </b> <br/><br/>")})
+    
+    output$CI_5 <- renderUI({HTML("<b> TO DO </b> <br/><br/>")})
     
     # Code for Walkthrough video 
     

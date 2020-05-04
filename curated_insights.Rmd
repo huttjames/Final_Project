@@ -25,16 +25,24 @@ read_data()
 
 ```
 
-```{r plot, echo=FALSE}
+```{r plot_flights, echo=FALSE}
 
 frames <- 10
+file_name <- "www/religion.gif"
 
-png(file="example%02d.png", width=900, height=900)
+png(file="religion%03d.png", width=900, height=900)
   for (i in 0:frames){
-    make_plot_master(edges_by = "IncomingFlights",
-                                    nodes_by = "pop",  
+    make_plot_master(edges_by = "ReligDif",
+                                    nodes_by = "age",  
                                     only_border = FALSE,
                                     edge_proportion = i / frames,
+                                    scale_factor = 1)
+  }
+  for (i in 0:4){
+    make_plot_master(edges_by = "ReligDif",
+                                    nodes_by = "age",  
+                                    only_border = FALSE,
+                                    edge_proportion = 1,
                                     scale_factor = 1)
   }
 dev.off()
@@ -45,10 +53,99 @@ img <- map(statics, image_read)
 img <- image_join(img)
 
 # convert pngs to one gif using ImageMagick
-image_animate(image_scale(img, "900x900"), fps = 1, dispose = "previous")
+animation <- image_animate(image_scale(img, "900x900"), 
+                           fps = 1, 
+                           dispose = "previous",
+                           optimize = TRUE)
+
+# save animation 
+
+image_write(animation, file_name)
 
 # cleaning up
 file.remove(list.files(pattern=".png"))
+
+```
+
+```{r plot_border, echo=FALSE}
+
+file_name <- "www/distance.gif"
+
+# Make images
+
+png(file="distance%03d.png", width=900, height=900)
+  for (i in 0:1){
+    make_plot_master(edges_by = "Distance",
+                                    nodes_by = "borders",  
+                                    only_border = FALSE,
+                                    edge_proportion = 1,
+                                    scale_factor = 1)
+  }
+  for (i in 0:1){
+    make_plot_master(edges_by = "Distance",
+                                    nodes_by = "borders",  
+                                    only_border = TRUE,
+                                    edge_proportion = 1,
+                                    scale_factor = 1)
+  }
+dev.off()
+
+# List images
+statics <- list.files(".", pattern = "\\.png$")
+img <- map(statics, image_read)
+img <- image_join(img)
+
+# convert pngs to one gif using ImageMagick
+animation <- image_animate(image_scale(img, "900x900"), 
+                           fps = 1, 
+                           dispose = "previous",
+                           optimize = TRUE)
+
+# save animation 
+
+image_write(animation, file_name)
+
+# cleaning up
+file.remove(list.files(pattern=".png"))
+
+
+```
+
+
+```{r plot_race, echo=FALSE}
+
+file_name <- "www/political.gif"
+
+# Make images
+
+png(file="poldif%03d.png", width=900, height=900)
+  for (i in 0:1){
+    make_plot_master(edges_by = "IdeologyDif",
+                                    nodes_by = "rural",  
+                                    only_border = TRUE,
+                                    edge_proportion = 1,
+                                    scale_factor = 1.5)
+  }
+dev.off()
+
+# List images
+statics <- list.files(".", pattern = "\\.png$")
+img <- map(statics, image_read)
+img <- image_join(img)
+
+# convert pngs to one gif using ImageMagick
+animation <- image_animate(image_scale(img, "900x900"), 
+                           fps = 1, 
+                           dispose = "previous",
+                           optimize = FALSE)
+
+# save animation 
+
+image_write(animation, file_name)
+
+# cleaning up
+file.remove(list.files(pattern=".png"))
+
 
 ```
 
