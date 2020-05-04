@@ -1,0 +1,30 @@
+---
+title: "Curated_Insights"
+author: "James Hutt"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(igraph)
+library(gganimate)
+library(tidyverse)
+
+source("code_files/functions.R")
+source("code_files/read_data.R")
+source("code_files/trim_data.R")
+source("code_files/prepare_plot.R")
+source("code_files/render_netw_plot.R")
+
+```
+
+```{r plot, echo=FALSE}
+
+make_plot_master(edges_by = "IncomingFlights",
+                         nodes_by = "pop",
+                         only_border = FALSE,
+                         edge_proportion = (input$edge_proportion / 100),
+                         scale_factor = (input$scale / 100))
+
+```
+

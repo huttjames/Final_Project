@@ -1,5 +1,6 @@
 
-render_netw_plot <- function(scale_factor = 1, edges_by = "RaceDif", nodes_by = "pop"){
+render_netw_plot <- function(scale_factor = 1, edges_by = "RaceDif", nodes_by = "pop", 
+                             edge_proportion = 1){
   
   # Set vertex size argument 
   
@@ -34,6 +35,18 @@ render_netw_plot <- function(scale_factor = 1, edges_by = "RaceDif", nodes_by = 
                          edges_by == "ReligDif" ~ "Sum of Absolute Religious Differences",
                          TRUE ~ "Sum of Absolute Racial Differences")
   
+  # Prepare arrow variable
+  
+  arrow_type <- case_when(edges_by == "RaceDif" ~ 0,
+                         edges_by == "Distance" ~ 0,
+                         edges_by == "ACS_Migration" ~ 3,
+                         edges_by == "IncomingFlights" ~ 3,
+                         edges_by == "Imports" ~ 3,
+                         edges_by == "IdeologyDif" ~ 0,
+                         edges_by == "ReligDif" ~ 0,
+                         TRUE ~ 0)
+  
+  
   # Prep must exist for this function to work, but this function will only be
   # called from within the master function which produces prep
   # We use this object to plot the network graph. Only the size of
@@ -47,8 +60,10 @@ render_netw_plot <- function(scale_factor = 1, edges_by = "RaceDif", nodes_by = 
               vertex.label.dist = 0,
               vertex.label.cex = 1,
               main=paste("US States Separated by", name_edge, name_vertex),
+              sub = paste("Proportion of edges plotted: ", edge_proportion),
               frame = F,
-              vertex.size = vertex_size_by * scale_factor)
+              vertex.size = vertex_size_by * scale_factor,
+              arrow.mode = arrow_type)
   
   
   

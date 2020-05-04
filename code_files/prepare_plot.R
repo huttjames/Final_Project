@@ -6,6 +6,17 @@ prepare_plot <- function(data = trimmed_x,
                          edges_by = "RaceDif", 
                          edge_proportion = 1){
   
+  #  Decide whether directed or not
+  
+  directed_type <- case_when(edges_by == "RaceDif" ~ FALSE,
+                          edges_by == "Distance" ~ FALSE,
+                          edges_by == "ACS_Migration" ~ TRUE,
+                          edges_by == "IncomingFlights" ~ TRUE,
+                          edges_by == "Imports" ~ TRUE,
+                          edges_by == "IdeologyDif" ~ FALSE,
+                          edges_by == "ReligDif" ~ FALSE,
+                          TRUE ~ FALSE)
+  
   # Modify x_state_data to drop states without borders if necessary
   
   x_state_data <- x_state_data %>% 
@@ -14,7 +25,7 @@ prepare_plot <- function(data = trimmed_x,
   # Assign this network to an object
   
   network <<- graph_from_data_frame(trimmed_x,
-                                   directed = FALSE,
+                                   directed = directed_type,
                                    vertices = x_state_data) %>%
     set_vertex_attr("pop", index = x_state_data$State1, 
                     value = x_state_data$logpop) %>%

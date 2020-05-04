@@ -1,0 +1,54 @@
+---
+title: "Curated_Insights"
+author: "James Hutt"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=24, fig.height=16)  
+
+library(igraph)
+library(magick)
+library(gganimate)
+library(purrr)
+library(tidyverse)
+
+source("code_files/functions.R")
+source("code_files/read_data.R")
+source("code_files/trim_data.R")
+source("code_files/prepare_plot.R")
+source("code_files/render_netw_plot.R")
+
+
+
+read_data()
+
+```
+
+```{r plot, echo=FALSE}
+
+frames <- 10
+
+png(file="example%02d.png", width=900, height=900)
+  for (i in 0:frames){
+    make_plot_master(edges_by = "IncomingFlights",
+                                    nodes_by = "pop",  
+                                    only_border = FALSE,
+                                    edge_proportion = i / frames,
+                                    scale_factor = 1)
+  }
+dev.off()
+
+# List images
+statics <- list.files(".", pattern = "\\.png$")
+img <- map(statics, image_read)
+img <- image_join(img)
+
+# convert pngs to one gif using ImageMagick
+image_animate(image_scale(img, "900x900"), fps = 1, dispose = "previous")
+
+# cleaning up
+file.remove(list.files(pattern=".png"))
+
+```
+

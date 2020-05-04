@@ -46,7 +46,8 @@ make_plot_master <- function(edges_by = "RaceDif",
     
     render_netw_plot(scale_factor = scale_factor, 
                      edges_by = edges_by,
-                     nodes_by = nodes_by)
+                     nodes_by = nodes_by, 
+                     edge_proportion = edge_proportion)
     
     return()
     
@@ -69,7 +70,8 @@ make_plot_master <- function(edges_by = "RaceDif",
     
     render_netw_plot(scale_factor = scale_factor, 
                      edges_by = edges_by,
-                     nodes_by = nodes_by)
+                     nodes_by = nodes_by, 
+                     edge_proportion = edge_proportion)
     
     return()
     
@@ -103,7 +105,8 @@ make_plot_master <- function(edges_by = "RaceDif",
     
     render_netw_plot(scale_factor = scale_factor, 
                      edges_by = edges_by,
-                     nodes_by = nodes_by)
+                     nodes_by = nodes_by, 
+                     edge_proportion = edge_proportion)
     
     return()
     
@@ -114,7 +117,8 @@ make_plot_master <- function(edges_by = "RaceDif",
   
   render_netw_plot(scale_factor = scale_factor, 
                    edges_by = edges_by,
-                   nodes_by = nodes_by)
+                   nodes_by = nodes_by, 
+                   edge_proportion = edge_proportion)
   
 
 }
